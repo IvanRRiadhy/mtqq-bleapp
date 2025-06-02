@@ -8,7 +8,7 @@ const globalpooldb = {
 const dbConfig = {
   user: "sa",
   password: "Password_123#",
-  server: "192.168.1.116",
+  server: "192.168.1.223",
   database: "mqttble_app",
   options: {
     encrypt: false,
@@ -29,9 +29,9 @@ async function initializeDatabase(testTableName = null) {
     });
 
     await pool.request()
-      .query(`IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'mqttble_app2')
+      .query(`IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'mqttble_app')
       BEGIN
-        CREATE DATABASE mqttble_app2;
+        CREATE DATABASE mqttble_app;
       END
     `);
 
@@ -63,6 +63,8 @@ async function initializeDatabase(testTableName = null) {
         temp FLOAT,
         time DATETIME NOT NULL,
         meter FLOAT,
+        calc_dist FLOAT, 
+        gmac VARCHAR(12) NOT NULL,
         measure FLOAT,
         FOREIGN KEY (gateway_id) REFERENCES gateways(id)
       );
@@ -83,6 +85,8 @@ async function initializeDatabase(testTableName = null) {
           temp FLOAT,
           time DATETIME NOT NULL,
           meter FLOAT,
+          calc_dist FLOAT,
+          gmac VARCHAR(12) NOT NULL,
           measure FLOAT,
           FOREIGN KEY (gateway_id) REFERENCES gateways(id)
         );
